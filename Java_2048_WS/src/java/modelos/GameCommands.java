@@ -25,7 +25,4 @@ public class GameCommands {
     public String toString() {
         return "GameCommands{" + "command=" + command + '}';
     }
-    
-    
-    
 }
