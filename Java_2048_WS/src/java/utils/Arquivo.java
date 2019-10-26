@@ -46,8 +46,6 @@ public class Arquivo {
         }
     }
 
-    public static void Write(String arquivo, GameCommands comando) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 }
 

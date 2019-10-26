@@ -57,13 +57,13 @@ public class JogoWS {
     }
     @POST
     @Consumes({"application/json"})
-    @Path("comando/option")
+    @Path("comando/{option}")
     public String postJson(String option){
     Gson g = new Gson();
     GameCommands comando = (GameCommands) g.fromJson(option, GameCommands.class);
     String arquivo = "comando.txt";
-    Arquivo.Write(arquivo, comando);
-        System.out.println(option);
+    Arquivo.Write(arquivo, comando.toString());
+    System.out.println(option);
     /*if(option.equals("Up") || option.equals("Right") || option.equals("Left")  || option.equals("Down") ){
             GameCommands gc = new GameCommands();
             gc.setCommand(option);
@@ -78,6 +78,6 @@ public class JogoWS {
             return p.toJson(response);
     }*/
     
-  return g.toJson(comando); 
+  return g.toJson(comando.command); 
 }
 }

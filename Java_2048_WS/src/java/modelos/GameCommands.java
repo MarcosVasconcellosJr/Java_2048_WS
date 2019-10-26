@@ -11,7 +11,7 @@ package modelos;
  */
 public class GameCommands {
     
-    private String command;
+    public String command;
     
     public String getCommand() {
         return command;
