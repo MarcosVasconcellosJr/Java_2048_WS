@@ -6,13 +6,17 @@
 package WS;
 
 import com.google.gson.Gson;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import modelos.GameCommands;
+import utils.Arquivo;
 
 /**
  * REST Web Service
@@ -51,4 +55,29 @@ public class JogoWS {
             return g.toJson(response);
         }
     }
+    @POST
+    @Consumes({"application/json"})
+    @Path("comando/option")
+    public String postJson(String option){
+    Gson g = new Gson();
+    GameCommands comando = (GameCommands) g.fromJson(option, GameCommands.class);
+    String arquivo = "comando.txt";
+    Arquivo.Write(arquivo, comando);
+        System.out.println(option);
+    /*if(option.equals("Up") || option.equals("Right") || option.equals("Left")  || option.equals("Down") ){
+            GameCommands gc = new GameCommands();
+            gc.setCommand(option);
+            String arquivo = "comando.txt";
+            Arquivo.Write(arquivo, option);
+            Gson p = new Gson();
+            return p.toJson(gc);
+        }
+        else {
+            String response = "Option command not available";
+            Gson p = new Gson();
+            return p.toJson(response);
+    }*/
+    
+  return g.toJson(comando); 
+}
 }

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import modelos.GameCommands;
 
 public class Arquivo {
     public static String Read(String Caminho){
@@ -43,6 +44,10 @@ public class Arquivo {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    public static void Write(String arquivo, GameCommands comando) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 
