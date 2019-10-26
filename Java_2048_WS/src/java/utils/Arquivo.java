@@ -6,21 +6,26 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import modelos.GameCommands;
 
 public class Arquivo {
     public static String Read(String Caminho){
         String conteudo = "";
         try {
+            
             FileReader arq = new FileReader(Caminho);
             BufferedReader lerArq = new BufferedReader(arq);
-            String linha="";
+            String linha = "";
+            
             try {
                 linha = lerArq.readLine();
+                
                 while(linha!=null){
-                    conteudo += linha+"\n";
+                    conteudo += linha + "\n";
                     linha = lerArq.readLine();
                 }
                 arq.close();
+                
                 return conteudo;
             } catch (IOException ex) {
                 System.out.println("Erro: Não foi possível ler o arquivo!");
@@ -32,11 +37,11 @@ public class Arquivo {
         }
     }
     
-    public static boolean Write(String Caminho,String Texto){
+    public static boolean Write(String Caminho, String content){
         try {
             FileWriter arq = new FileWriter(Caminho);
             PrintWriter gravarArq = new PrintWriter(arq);
-            gravarArq.println(Texto);
+            gravarArq.println(content);
             gravarArq.close();
             return true;
         }catch(IOException e){
@@ -44,7 +49,5 @@ public class Arquivo {
             return false;
         }
     }
-
-   
 }
 
