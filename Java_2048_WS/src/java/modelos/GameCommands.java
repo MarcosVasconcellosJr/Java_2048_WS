@@ -2,11 +2,6 @@ package modelos;
 
 public class GameCommands {
 
-    public enum Commands {
-
-        Left, Right, Up, Down, Restart, Desfazer, Refazer, Bonus
-    }
-
     public String option;
 
     public String getOption() {
