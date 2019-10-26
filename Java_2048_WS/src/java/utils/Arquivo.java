@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import modelos.GameCommands;
 
 public class Arquivo {
     public static String Read(String Caminho){
