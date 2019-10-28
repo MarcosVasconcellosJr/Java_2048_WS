@@ -3,8 +3,8 @@
 * Marcos Junior - 18720920
 * Hiago Silva - 18726455
 *
-* Este programa é uma cópia barata do jogo 2048, cuja finalidade
-* é juntar pares de valores iguais a fim de somar um quadrado de 
+* Este programa Ã© uma cÃ³pia barata do jogo 2048, cuja finalidade
+* Ã© juntar pares de valores iguais a fim de somar um quadrado de 
 * valor = 2048
  */
 package Jogo2048;
@@ -22,10 +22,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-
-
-
-// Classe principal que declara as variáveis e chama funcionalidades
+// Classe principal que declara as variÃ¡veis e chama funcionalidades
 public class Jogo2048 extends JPanel {
     
     String arq = "src\\model\\maximumhighScore.txt";
@@ -36,32 +33,32 @@ public class Jogo2048 extends JPanel {
         new Color(0xbe7e56), new Color(0xbe5e56), new Color(0x9c3931), new Color(0x701710)
     }; // Cores usadas
 
-    public static int objetivo = 2048; // Objetivo padrão do jogo, alcançar recorde = 2048
+    public static int objetivo = 2048; // Objetivo padrÃ£o do jogo, alcanÃ§ar recorde = 2048
     public static int recorde;
-    public static int pontos; // Pontuação atual do jogador
+    public static int pontos; // PontuaÃ§Ã£o atual do jogador
 
     public Color caixaCor = new Color(0x4EB7CC); // Cor do container de fundo do jogo 2048
-    public Color corCaixinhaVazia = new Color(0xEBEBEB);// Coir da caixinha do número
+    public Color corCaixinhaVazia = new Color(0xEBEBEB);// Coir da caixinha do nÃºmero
     public Color textos = new Color(0x506266);
     public Color corTelaDeInicio = new Color(0xEBEBEB); // Cor de fundo da tela inicial
     public Color cabecalho = new Color(0xe8649b);
     public Color blocosCabecalho = new Color(0xEBEBEB);
 
-    public static Caixinha[][] caixinha; // Declaração da matriz que será usada para toda a lógica do joguinho
+    public static Caixinha[][] caixinha; // DeclaraÃ§Ã£o da matriz que serÃ¡ usada para toda a lÃ³gica do joguinho
     public static Caixinha[][] caixinhaEstadoAnterior;
-    public int tam = 4; // usada para declarar as dimensões da matriz
+    public int tam = 4; // usada para declarar as dimensÃµes da matriz
 
-    public static String statusDoJogo = "inicio"; // usada para tomar ações dependendo do status atual que o usuário está
-    public boolean temMovimentosPossiveis; // Usada para fazer a verificação dos movimentos para os 4 lados.
+    public static String statusDoJogo = "inicio"; // usada para tomar aÃ§Ãµes dependendo do status atual que o usuÃ¡rio estÃ¡
+    public boolean temMovimentosPossiveis; // Usada para fazer a verificaÃ§Ã£o dos movimentos para os 4 lados.
     public Movimentos mover;
     
-    public boolean jaDesfez = false, jaRefez = false; //Usamos para saber se a ação de desfazer e refazer movimentos já foi executada
+    public boolean jaDesfez = false, jaRefez = false; //Usamos para saber se a aÃ§Ã£o de desfazer e refazer movimentos jÃ¡ foi executada
     
     public static String conteudo = ""; //Conteudo do arquivo de highscore
     
-    public int clicouEmX, clicouEmY; //Posição que o usuário clicou com o mouse
-    public int soltouEmX, soltouEmY; //Posição que o usuário soltou o mouse
-    public int dX = 0, dY = 0; //Variação do click e release do mouse
+    public int clicouEmX, clicouEmY; //PosiÃ§Ã£o que o usuÃ¡rio clicou com o mouse
+    public int soltouEmX, soltouEmY; //PosiÃ§Ã£o que o usuÃ¡rio soltou o mouse
+    public int dX = 0, dY = 0; //VariaÃ§Ã£o do click e release do mouse
 
     public Jogo2048() {
         setPreferredSize(new Dimension(900, 700));// tamanho da tela a ser exibida
@@ -73,8 +70,8 @@ public class Jogo2048 extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                clicouEmX = e.getX(); // Pega posição em X
-                clicouEmY = e.getY(); // Pega posição em Y
+                clicouEmX = e.getX(); // Pega posiÃ§Ã£o em X
+                clicouEmY = e.getY(); // Pega posiÃ§Ã£o em Y
             }
 
             @Override
@@ -85,7 +82,7 @@ public class Jogo2048 extends JPanel {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jogo2048.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                repaint(); // Ele habilita um update no redesenhamento do jpanel quando os métodos gráficos são chamados
+                repaint(); // Ele habilita um update no redesenhamento do jpanel quando os mÃ©todos grÃ¡ficos sÃ£o chamados
             }
         });
 
@@ -124,9 +121,6 @@ public class Jogo2048 extends JPanel {
         });
     }
 
-    private Jogo2048(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public String Jogo2048(int Status) {
         if(Status == 1){
@@ -148,7 +142,7 @@ public class Jogo2048 extends JPanel {
     }
 
     public void iniciarJogo() {
-        if (statusDoJogo != "usuarioJogando") {
+        if (!statusDoJogo.equals("usuarioJogando")) {
             pontos = 0;
             recorde = 0;
             statusDoJogo = "usuarioJogando";
@@ -169,15 +163,15 @@ public class Jogo2048 extends JPanel {
             soltouEmY = e.getY();
             dX = (soltouEmX - clicouEmX);
             dY = (soltouEmY - clicouEmY)*(-1);
-            //Botões Desfazer e refazer
-            if (clicouEmX > 215 && clicouEmX < 275 && clicouEmY > 30 && clicouEmY < 80 ){
+            //BotÃµes Desfazer e refazer
+            if (clicouEmX > 215 && clicouEmX < 275 && clicouEmY > 30 && clicouEmY < 80){
                 if(jaDesfez == false){
                     troca(caixinhaEstadoAnterior, caixinha, 1);
                     jaDesfez = true;
                     jaRefez = false;
                 }
             }
-            if (clicouEmX > 290 && clicouEmX < 350 && clicouEmY > 30 && clicouEmY < 80 ){
+            if (clicouEmX > 290 && clicouEmX < 350 && clicouEmY > 30 && clicouEmY < 80){
                 if(jaRefez == false){
                     troca(caixinhaEstadoAnterior, caixinha, 1);
                     jaRefez = true;
@@ -243,11 +237,10 @@ public class Jogo2048 extends JPanel {
         g.drawImage(refazer, 305, 40, 30, 30, null);
         
         // Blocos de Score atual e HighScore
-        // Desenha o score do usuário
+        // Desenha o score do usuÃ¡rio
         g.setColor(blocosCabecalho);
         g.fillRoundRect(365, 30, 150, 50, 25, 25);
-        g.setColor(textos);
-        g.setFont(new Font("SansSerif", Font.BOLD, 17));
+        g.setColor(textos);g.setFont(new Font("SansSerif", Font.BOLD, 17));
         String s = String.valueOf(pontos);
         g.drawString("Score: " + s, 375, 63);
         // Desenha o highScore
@@ -256,7 +249,7 @@ public class Jogo2048 extends JPanel {
         g.setColor(textos);
         g.setFont(new Font("SansSerif", Font.BOLD, 20));
         
-        //Lê o arquivo e mostra o maior valor já feito no histórico do programa
+        //LÃª o arquivo e mostra o maior valor jÃ¡ feito no histÃ³rico do programa
         s = Arquivos.Read(arq);
         conteudo = Arquivos.Read(arq);
         double c = Double.parseDouble(conteudo);
@@ -270,7 +263,7 @@ public class Jogo2048 extends JPanel {
             g.drawString("HighScore: " + s, 540, 63);
         }
        
-        if (statusDoJogo == "usuarioJogando") {
+        if (statusDoJogo.equals("usuarioJogando")) {
             for (int linha = 0; linha < tam; linha++) {
                 for (int coluna = 0; coluna < tam; coluna++) {
                     if (caixinha[linha][coluna] == null) {
@@ -324,17 +317,17 @@ public class Jogo2048 extends JPanel {
         g.drawString(s, x, y);
     }
 
-    // Função faz o trabalho exclusivo de adicionar uma caixinha de forma randômica
+    // FunÃ§Ã£o faz o trabalho exclusivo de adicionar uma caixinha de forma randÃ´mica
     public void addCaixinhaRandomica(int a) {
 
-        Random rand = new Random();// Cria a váriavel Randômica
+        Random rand = new Random();// Cria a vÃ¡riavel RandÃ´mica
         int flag = 0;// Setamos como 1 a flag e assim o do while para seu processo
-        int maxInteracoes = 0;// Controlamos o (do while) para que ele não entre em um loop infinito
+        int maxInteracoes = 0;// Controlamos o (do while) para que ele nÃ£o entre em um loop infinito
         
         do {
-            int n = rand.nextInt(4);// seta um número aleatorio entre 0 e 3 para o N(nsera a posição na matriz)
-            int n1 = rand.nextInt(4);// seta outro número para a posição na matriz
-            int valorRand = rand.nextInt(2);// Gera 1 ou 0 para escolher se o número que aparecera sera 2 ou 4
+            int n = rand.nextInt(4);// seta um nÃºmero aleatorio entre 0 e 3 para o N(nsera a posiÃ§Ã£o na matriz)
+            int n1 = rand.nextInt(4);// seta outro nÃºmero para a posiÃ§Ã£o na matriz
+            int valorRand = rand.nextInt(2);// Gera 1 ou 0 para escolher se o nÃºmero que aparecera sera 2 ou 4
 
             if (caixinha[n][n1] == null) {
                 if(a == 1){
