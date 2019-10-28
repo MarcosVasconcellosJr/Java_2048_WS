@@ -1,15 +1,18 @@
 package utils;
 
+//<editor-fold defaultstate="collapsed" desc=".:: Imports ::.">
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+//</editor-fold>
 
 public class Arquivo {
 
-    public static String Read(String Caminho) {
+//<editor-fold defaultstate="collapsed" desc=".:: Read ::.">
+public static String Read(String Caminho) {
         String conteudo = "";
         try {
 
@@ -38,7 +41,9 @@ public class Arquivo {
             return "";
         }
     }
+//</editor-fold>
 
+//<editor-fold defaultstate="collapsed" desc=".:: Write ::.">
     public static boolean Write(String Caminho, String content) {
         try {
             FileWriter arq = new FileWriter(Caminho);
@@ -51,4 +56,6 @@ public class Arquivo {
             return false;
         }
     }
+//</editor-fold>
+
 }
