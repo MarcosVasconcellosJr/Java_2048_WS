@@ -18,25 +18,23 @@ import utils.Arquivo;
 public class JogoWS {
 
 //<editor-fold defaultstate="collapsed" desc=".:: Constants ::.">
-    
     String filePath = "C:\\logWS\\comando.txt";
 
-    public String RESPONSE_ERROR = "{"+"\"Commands Available"+"\":" + 
-            " \n\t\t["+ "\n\t\tUp," 
-            + "\n\t\tDown," + "\n\t\tLeft," 
-            + "\n\t\tRight," + "\n\t\tRestart," 
-            + "\n\t\tUndo," + "\n\t\tRedo," 
+    public String RESPONSE_ERROR = "{" + "\"Commands Available" + "\":"
+            + " \n\t\t[" + "\n\t\tUp,"
+            + "\n\t\tDown," + "\n\t\tLeft,"
+            + "\n\t\tRight," + "\n\t\tRestart,"
+            + "\n\t\tUndo," + "\n\t\tRedo,"
             + "\n\t\tBonus" + "\n]}";
 
     @Context
     private UriInfo context;
-    
-//</editor-fold>
 
+//</editor-fold>
     public JogoWS() {
-        
+
     }
-    
+
 //<editor-fold defaultstate="collapsed" desc=".:: Withdraw ::.">
     @GET
     @Produces({"application/json"})
@@ -63,12 +61,16 @@ public class JogoWS {
             throw new WebApplicationException(Response
                     .status(Response.Status.BAD_REQUEST)
                     .entity(RESPONSE_ERROR).build());
-        }   
+        }
 
         boolean writed = Arquivo.Write(filePath, content);
-        System.out.println(writed);
-
-        return content;
+        if (writed) {
+            return content;
+        } else {
+            throw new WebApplicationException(Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("SERVER ERROR").build());
+        }
     }
 //</editor-fold>
 
