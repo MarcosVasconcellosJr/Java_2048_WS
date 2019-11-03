@@ -3,26 +3,32 @@
 * Marcos Junior - 18720920
 * Hiago Silva - 18726455
 *
-* Este programa Ã© uma cÃ³pia barata do jogo 2048, cuja finalidade
-* Ã© juntar pares de valores iguais a fim de somar um quadrado de 
+* Este programa e uma copia barata do jogo 2048, cuja finalidade
+* e juntar pares de valores iguais a fim de somar um quadrado de 
 * valor = 2048
  */
 package Jogo2048;
 import model.Caixinha;
 import controller.Movimentos;
 import arquivo.Arquivos;
+import com.google.gson.Gson;
+import controller.Http;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+import java.util.logging.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import model.GameCommands;
+import java.util.List;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 
-// Classe principal que declara as variÃ¡veis e chama funcionalidades
+
+// Classe principal que declara as variaveis e faz a orquestragem de funcionalidades
 public class Jogo2048 extends JPanel {
     
     String arq = "src\\model\\maximumhighScore.txt";
@@ -82,7 +88,7 @@ public class Jogo2048 extends JPanel {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Jogo2048.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                repaint(); // Ele habilita um update no redesenhamento do jpanel quando os mÃ©todos grÃ¡ficos sÃ£o chamados
+                repaint(); // Ele habilita um update no redesenhamento do jpanel quando os metodos graficos sao chamados
             }
         });
 
@@ -120,8 +126,24 @@ public class Jogo2048 extends JPanel {
             }
         });
     }
-
-
+    
+    public void readResponseFromWS(StringBuffer sendGet) {
+        System.out.println("PUTA QUE PAREU" + sendGet.toString());
+        if (sendGet.toString().contains("Down")) {
+            mover.moveDown();
+        }
+        if (sendGet.toString().contains("Up")) {
+            mover.moveUp();
+        }
+        if (sendGet.toString().contains("Left")) {
+            mover.moveLeft();
+        }
+        if (sendGet.toString().contains("Right")) {
+            mover.moveRight();
+        }
+        repaint();
+    }
+                
     public String Jogo2048(int Status) {
         if(Status == 1){
             return statusDoJogo;
@@ -149,9 +171,25 @@ public class Jogo2048 extends JPanel {
             caixinha = new Caixinha[tam][tam];
             caixinhaEstadoAnterior = new Caixinha[tam][tam];
             mover = new Movimentos();
-            System.out.println("1");
             addCaixinhaRandomica(1);
             addCaixinhaRandomica(1);
+            Http http = new Http();
+            GameCommands gc = new GameCommands();
+        
+            new Thread() {
+                @Override
+                public void run() {
+                   while(true){
+                       try {
+                           Thread.sleep(1000);
+                           readResponseFromWS(http.sendGet());
+                       } catch (InterruptedException ex) {
+                       } catch (Exception ex) {
+                           Logger.getLogger(Jogo2048.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                   }
+                }
+            }.start();
         }
     }
 
@@ -163,7 +201,7 @@ public class Jogo2048 extends JPanel {
             soltouEmY = e.getY();
             dX = (soltouEmX - clicouEmX);
             dY = (soltouEmY - clicouEmY)*(-1);
-            //BotÃµes Desfazer e refazer
+            //Botoes Desfazer e refazer
             if (clicouEmX > 215 && clicouEmX < 275 && clicouEmY > 30 && clicouEmY < 80){
                 if(jaDesfez == false){
                     troca(caixinhaEstadoAnterior, caixinha, 1);
@@ -317,7 +355,7 @@ public class Jogo2048 extends JPanel {
         g.drawString(s, x, y);
     }
 
-    // FunÃ§Ã£o faz o trabalho exclusivo de adicionar uma caixinha de forma randÃ´mica
+    // Funcao faz o trabalho exclusivo de adicionar uma caixinha de forma randomica
     public void addCaixinhaRandomica(int a) {
 
         Random rand = new Random();// Cria a vÃ¡riavel RandÃ´mica
@@ -348,7 +386,8 @@ public class Jogo2048 extends JPanel {
         } while (flag == 0 && maxInteracoes <= 16);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        
         SwingUtilities.invokeLater(() -> {
             JFrame f = new JFrame();
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
