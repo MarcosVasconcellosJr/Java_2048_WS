@@ -27,7 +27,6 @@ public class Activity_Setas extends AppCompatActivity {
     public void clicouSetaCima(View view) {
         TextView texto = (TextView) findViewById(R.id.textView7);
         texto.setText("UP");
-
     }
 
     public void clicouSetaBaixo(View view) {
