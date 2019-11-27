@@ -10,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import static java.lang.Thread.sleep;
+
 public class ActivityAcelerometro extends Activity implements SensorEventListener
     {
-        private TextView X, Y, Z;
+        private TextView X, Y, Z, Movimento;//Variables to receive accelerometer values
         private Sensor Sensor;
         private SensorManager SM;
 
@@ -34,6 +36,7 @@ public class ActivityAcelerometro extends Activity implements SensorEventListene
         X = (TextView)findViewById(R.id.xText);
         Y = (TextView)findViewById(R.id.yText);
         Z = (TextView)findViewById(R.id.zText);
+        Movimento = (TextView) findViewById(R.id.movtext);
     }
 
         @Override
@@ -42,10 +45,28 @@ public class ActivityAcelerometro extends Activity implements SensorEventListene
     }
 
         @Override
+        //Check which move to perform
         public void onSensorChanged(SensorEvent event) {
         X.setText("X: " + event.values[0]);
         Y.setText("Y: " + event.values[1]);
         Z.setText("Z: " + event.values[2]);
+            float a = event.values[0];
+            float b = event.values[1];
+            float c = event.values[2];
+        if(a < 0.3 && b < 9.6 && c > -0.2){
+            Movimento.setText("UP");
+            }
+            if(a < 0 && b < 7 && c < -1){
+                Movimento.setText("DOWN");
+            }
+            if(a > 0.3 && b < 9.6 && c < -0.2){
+                Movimento.setText("LEFT");
+
+            }
+            if(a < 0.3 && b > 0 && c < -0.2){
+                Movimento.setText("RIGTH");
+
+            }
 
     }
 
