@@ -55,6 +55,7 @@ public class SpeechRecognitionActivity extends AppCompatActivity {
                     ArrayList<String> result = dados.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String ditado =  result.get(0);
                     Toast.makeText(getApplicationContext(), ditado, Toast.LENGTH_LONG).show();
+
                     if(ditado.equals("esquerda")){
                         ditado = "Left";
                     }

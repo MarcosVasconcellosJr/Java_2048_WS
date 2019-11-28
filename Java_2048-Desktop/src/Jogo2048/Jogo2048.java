@@ -48,7 +48,8 @@ public class Jogo2048 extends JPanel {
     public Color blocosCabecalho = new Color(0xEBEBEB);
 
     public static Caixinha[][] caixinha; // DeclaraÃ§Ã£o da matriz que serÃ¡ usada para toda a lÃ³gica do joguinho
-    public static Caixinha[][] caixinhaEstadoAnterior;
+    public static Caixinha[][] undo;
+    public static Caixinha[][] redo;
     public int tam = 4; // usada para declarar as dimensÃµes da matriz
 
     public static String statusDoJogo = "inicio"; // usada para tomar aÃ§Ãµes dependendo do status atual que o usuÃ¡rio estÃ¡
@@ -56,6 +57,7 @@ public class Jogo2048 extends JPanel {
     public Movimentos mover;
     
     public boolean jaDesfez = false, jaRefez = false; //Usamos para saber se a aÃ§Ã£o de desfazer e refazer movimentos jÃ¡ foi executada
+    public boolean firstUse = true;
     
     public static String conteudo = ""; //Conteudo do arquivo de highscore
     
@@ -73,13 +75,14 @@ public class Jogo2048 extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                mouseEvents(e);
                 clicouEmX = e.getX(); // Pega posiÃ§Ã£o em X
                 clicouEmY = e.getY(); // Pega posiÃ§Ã£o em Y
+                repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                mouseEvents(e);
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException ex) {
@@ -165,7 +168,8 @@ public class Jogo2048 extends JPanel {
             recorde = 0;
             statusDoJogo = "usuarioJogando";
             caixinha = new Caixinha[tam][tam];
-            caixinhaEstadoAnterior = new Caixinha[tam][tam];
+            undo = new Caixinha[tam][tam];
+            redo = new Caixinha[tam][tam];
             mover = new Movimentos();
             addCaixinhaRandomica(1);
             addCaixinhaRandomica(1);
@@ -203,21 +207,6 @@ public class Jogo2048 extends JPanel {
             soltouEmY = e.getY();
             dX = (soltouEmX - clicouEmX);
             dY = (soltouEmY - clicouEmY)*(-1);
-            //Botoes Desfazer e refazer
-            if (clicouEmX > 215 && clicouEmX < 275 && clicouEmY > 30 && clicouEmY < 80){
-                if(jaDesfez == false){
-                    troca(caixinhaEstadoAnterior, caixinha, 1);
-                    jaDesfez = true;
-                    jaRefez = false;
-                }
-            }
-            if (clicouEmX > 290 && clicouEmX < 350 && clicouEmY > 30 && clicouEmY < 80){
-                if(jaRefez == false){
-                    troca(caixinhaEstadoAnterior, caixinha, 1);
-                    jaRefez = true;
-                    jaDesfez = false;
-                }
-            }
 
             //1 quadrante
             if (dX > 0 && dY > 0) {
@@ -241,20 +230,6 @@ public class Jogo2048 extends JPanel {
             }
         } catch (java.lang.NullPointerException el) {
             System.out.println("Impossível lidar com teclado, falha de sistema");
-        }
-    }
-    
-    public void troca(Caixinha[][] a, Caixinha[][] b, int func){
-        Caixinha swap;
-        for (int linha = 0; linha < tam; linha++) {
-            for (int coluna = 0; coluna < tam; coluna++) {
-                if(func == 1){
-                    swap = a[linha][coluna];
-                    a[linha][coluna] = b[linha][coluna];
-                    b[linha][coluna] = swap;
-                }//Func 1 faz a trocar com b
-                if(func == 2) a[linha][coluna] = b[linha][coluna]; //Func 2 faz a = b
-            }
         }
     }
 

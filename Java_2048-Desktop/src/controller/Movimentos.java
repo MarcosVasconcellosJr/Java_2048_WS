@@ -105,28 +105,24 @@ public class Movimentos extends Jogo2048 {
     }
 
     public boolean moveUp() {
-        super.troca(super.caixinhaEstadoAnterior, super.caixinha, 2); //Vai dar pra a tudo que tem em b
         return move(0, 0, -1);
     }
 
     public boolean moveDown() {
-        //super.troca(super.caixinhaEstadoAnterior, super.caixinha, 2); //Vai dar pra a tudo que tem em b
         return move(super.tam * super.tam - 1, 0, 1);
     }
 
     public boolean moveLeft() {
-        //super.troca(super.caixinhaEstadoAnterior, super.caixinha, 2); //Vai dar pra a tudo que tem em b
         return move(0, -1, 0);
     }
 
     public boolean moveRight() {
-        super.troca(super.caixinhaEstadoAnterior, super.caixinha, 2); //Vai dar pra a tudo que tem em b
         return move(super.tam * super.tam - 1, 1, 0);
     }
 
     public boolean verificaRangeTamMatriz(int pos1, int pos2){
         if(pos1 >= 0 && pos1 < super.tam){
-            if(pos2 >= 0 && pos2 < super.tam){
+            if(pos2 >= 0 && pos2 < super.tam) {
                 return true;
             }
         }

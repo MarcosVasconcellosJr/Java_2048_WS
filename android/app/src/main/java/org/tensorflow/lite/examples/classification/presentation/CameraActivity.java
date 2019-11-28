@@ -38,6 +38,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.View;
@@ -56,6 +58,7 @@ import java.util.List;
 import org.tensorflow.lite.examples.classification.CameraConnectionFragment;
 import org.tensorflow.lite.examples.classification.LegacyCameraConnectionFragment;
 import org.tensorflow.lite.examples.classification.R;
+import org.tensorflow.lite.examples.classification.controller.MovimentController.MovimentController;
 import org.tensorflow.lite.examples.classification.mechanism.tensorFlow.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.mechanism.tensorFlow.env.Logger;
 import org.tensorflow.lite.examples.classification.mechanism.tensorFlow.tflite.Classifier.Device;
@@ -183,18 +186,12 @@ public abstract class CameraActivity extends AppCompatActivity
 
     recognitionTextView = findViewById(R.id.detected_item);
     recognitionValueTextView = findViewById(R.id.detected_item_value);
-    System.out.println("PINTO" + recognitionTextView);
-    System.out.println("CU" + recognitionValueTextView);
 
     recognition1TextView = findViewById(R.id.detected_item1);
     recognition1ValueTextView = findViewById(R.id.detected_item1_value);
-    System.out.println(recognition1TextView);
-    System.out.println(recognition1ValueTextView);
 
     recognition2TextView = findViewById(R.id.detected_item2);
     recognition2ValueTextView = findViewById(R.id.detected_item2_value);
-    System.out.println(recognition1TextView);
-    System.out.println(recognition1ValueTextView);
 
     frameValueTextView = findViewById(R.id.frame_info);
     cropValueTextView = findViewById(R.id.crop_info);
@@ -530,6 +527,8 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @UiThread
   protected void showResultsInBottomSheet(List<Recognition> results) {
+    MovimentController MOVE = new MovimentController();
+
     if (results != null && results.size() >= 3) {
       Recognition recognition = results.get(0);
       if (recognition != null) {
@@ -538,13 +537,50 @@ public abstract class CameraActivity extends AppCompatActivity
           recognitionValueTextView.setText(
               String.format("%.2f", (100 * recognition.getConfidence())) + "%");
       }
+      String viewResults = "";
+      boolean achou = false;
 
       Recognition recognition1 = results.get(1);
+
       if (recognition1 != null) {
-        if (recognition1.getTitle() != null) recognition1TextView.setText(recognition1.getTitle());
-        if (recognition1.getConfidence() != null)
-          recognition1ValueTextView.setText(
-              String.format("%.2f", (100 * recognition1.getConfidence())) + "%");
+        if (recognition1.getTitle() != null) {
+          recognition1TextView.setText(recognition1.getTitle());
+
+          if(recognition1.getTitle().toString().equals("notebook")){
+            if (recognition1.getConfidence() != null){
+              viewResults = recognition1.getTitle();
+              MOVE.MovimentVerify("Up");
+            }
+
+          }
+
+          if(recognition1.getTitle().toString().equals("digital watch")){
+            if (recognition1.getConfidence() != null){
+              viewResults = recognition1.getTitle();
+              MOVE.MovimentVerify("Down");
+            }
+          }
+
+          if(recognition1.getTitle().toString().equals("backpack")){
+            if (recognition1.getConfidence() != null){
+              viewResults = recognition1.getTitle();
+              MOVE.MovimentVerify("Left");
+            }
+          }
+
+          if(recognition1.getTitle().toString().equals("cellular telephone")){
+            if (recognition1.getConfidence() != null){
+              viewResults = recognition1.getTitle();
+              MOVE.MovimentVerify("Right");
+            }
+          }
+
+          if (recognition1.getConfidence() != null)
+            recognition1ValueTextView.setText(
+                    String.format("%.2f", (100 * recognition1.getConfidence())) + "%");
+        }
+
+
       }
 
       Recognition recognition2 = results.get(2);
