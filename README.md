@@ -17,7 +17,7 @@ Este programa é uma cópia barata do jogo 2048, cuja finalidade é juntar pares
 
 * Para baixar o projeto tanto no Windows ou Linux como em qualquer outro ambiente compatível com o git, use:
 ```
-git clone https://github.com/MarcosJr1/Java_2048.git
+git clone https://github.com/MarcosJr1/Java_2048_WS.git
 ```
 
 ### Como ver os arquivos?
@@ -58,3 +58,9 @@ Relativo a usabilidade do aplicativo desktop
 * Blocos animados com gifs
 * Feedback de vitória
 * Botôes clicáveis de desfazer movimento e refazer movimento
+##Aplicativo
+O aplicativo possibilita fazer os movimentos por meio das seguintes formas:
+* Por meio de setas
+* Por meio do reconhecimento de imagens com o tensorflow
+* Por meio do acelerometro do celular
+
