@@ -11,7 +11,6 @@ package Jogo2048;
 import model.Caixinha;
 import controller.Movimentos;
 import arquivo.Arquivos;
-import com.google.gson.Gson;
 import controller.Http;
 
 import java.awt.*;
@@ -23,9 +22,7 @@ import java.util.logging.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import model.GameCommands;
-import java.util.List;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
+
 
 
 // Classe principal que declara as variaveis e faz a orquestragem de funcionalidades
@@ -128,7 +125,6 @@ public class Jogo2048 extends JPanel {
     }
     
     public void readResponseFromWS(StringBuffer sendGet) {
-        System.out.println("PUTA QUE PAREU" + sendGet.toString());
         if (sendGet.toString().contains("Down")) {
             mover.moveDown();
         }

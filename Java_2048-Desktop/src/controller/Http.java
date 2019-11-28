@@ -5,6 +5,7 @@
  */
 package controller;
 
+import Jogo2048.Jogo2048;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -14,7 +15,7 @@ import java.net.URL;
  *
  * @author marcos
  */
-public class Http {
+public class Http{
 
     private final String USER_AGENT = "Mozilla/5.0";
 
@@ -24,7 +25,7 @@ public class Http {
 
     // HTTP GET request
     public StringBuffer sendGet() throws Exception {
-
+        
         String url = "http://localhost:8080/Java_2048_WS/webresources/withdraw";
 
         URL obj = new URL(url);
