@@ -26,7 +26,7 @@ public class Http{
     // HTTP GET request
     public StringBuffer sendGet() throws Exception {
         
-        String url = "http://localhost:8080/Java_2048_WS/webresources/withdraw";
+        String url = "https://6c19da56.ngrok.io/Java_2048_WS/webresources/withdraw";
 
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();

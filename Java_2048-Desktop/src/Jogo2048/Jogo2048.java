@@ -171,7 +171,13 @@ public class Jogo2048 extends JPanel {
             addCaixinhaRandomica(1);
             Http http = new Http();
             GameCommands gc = new GameCommands();
-        
+            
+            try {
+                StringBuffer lixo = http.sendGet();
+            } catch (Exception ex) {
+                Logger.getLogger(Jogo2048.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             new Thread() {
                 @Override
                 public void run() {
